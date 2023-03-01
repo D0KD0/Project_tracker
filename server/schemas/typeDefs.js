@@ -3,9 +3,32 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
     type User {
         _id: ID
-        username: String
-        email: String
-        password: String
+        username: String!
+        email: String!
+        password: String!
+        projects: [Project]
+    }
+
+    type Project {
+        _id: ID
+        name: String!
+        nembers: [User]
+        budget: Float
+        tasks: [Task]
+    }
+
+    type Task {
+        _id: ID
+        name: String!
+        description: String!
+        project: Project
+        creator: User
+        assignee: [User]
+        status: String!
+        createdAt: Date
+        dueDate: Date
+        impact: String
+        budget: Float
     }
 
     type Auth {
