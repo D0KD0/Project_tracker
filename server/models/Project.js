@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 
 const projectSchema = new Schema({
@@ -23,6 +23,11 @@ const projectSchema = new Schema({
             ref: 'Task'
         }
     ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp),
+    },
 },
     // set this to use virtual below
     {
