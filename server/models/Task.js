@@ -18,7 +18,7 @@ const taskSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "User",
         },
-        assignee: [
+        assignees: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "User",
