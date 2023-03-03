@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.css';
+import {} from 'react-bootstrap';
 
 // Here we import a helper function that will check if the email is valid
 import { checkPassword, validateEmail } from '../utils/helpers.js';
