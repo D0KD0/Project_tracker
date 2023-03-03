@@ -4,7 +4,7 @@ import './style.css';
 // Here we import a helper function that will check if the email is valid
 import { checkPassword, validateEmail } from '../../utils/helpers';
 
-function Form() {
+function LoginForm() {
   // Create state variables for the fields in the form
   // We are also setting their initial values to an empty string
   const [email, setEmail] = useState('');
@@ -54,8 +54,8 @@ function Form() {
   };
 
   return (
-    <div>
-      <p>Hello {userName}</p>
+    <div class="loginform">
+      <p class="title">Login</p>
       <form className="form">
         <input
           value={email}
@@ -89,4 +89,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default LoginForm;

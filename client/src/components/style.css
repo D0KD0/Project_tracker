@@ -1,11 +1,22 @@
 .form {
     margin: 20px;
-  }
-  
-  .form input {
-    display: block;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 100%;
-  }
-  
+}
+
+.form input {
+display: block;
+margin-top: 5px;
+margin-bottom: 10px;
+width: 50%;
+}
+
+.loginform {
+    background-color: rgb(139, 130, 241);
+    width: 50%;
+    border-radius: 7%;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    font-size: 24px;
+}
