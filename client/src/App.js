@@ -8,7 +8,6 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
-import Navbar from './components/Navbar';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -39,8 +38,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
       <>
-      dfasdfasdf
-
+      <Route path="/login" component={LoginForm} />
       </>
     </Router>
 
