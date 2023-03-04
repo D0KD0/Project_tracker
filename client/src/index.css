@@ -1,5 +1,18 @@
+*{
+  --tan: rgb(216, 149, 87);
+  --tan30: rgb(217, 217, 217, 0.3);
+  --lighttan: rgb(246, 216, 187);
+  --brown: rgb(140, 93, 50);
+  --fields: rgb(217, 217, 217);
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+
 body {
   font-family: 'Rubik', sans-serif;
+  background-color: var(--tan);
 }
 
 h1,
@@ -15,3 +28,122 @@ h6 {
   font-weight: 300;
   font-style: italic;
 }
+
+
+/* Background colors */
+.bg-tan {
+  background-color: var(--tan);
+}
+
+.bg-tan30 {
+  background-color: var(--tan30);
+}
+
+.bg-lighttan {
+  background-color: var(--lighttan);
+}
+
+.bg-brown {
+  background-color: var(--brown);
+}
+
+/* Text Colors */
+.txt-tan {
+  color: var(--tan);
+}
+
+
+.txt-lighttan {
+  color: var(--lighttan);
+}
+
+.txt-brown {
+  color: var(--brown);
+}
+.mt-80 {
+  margin-top: 80px;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+.inputfield {
+  width: 100%;
+  height: 35px;
+  border: none;
+  background-color: var(--fields);
+}
+
+/* Default container info */
+#Logo_Container {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  height: 120px;
+  font-size: 40px;
+}
+
+#Content_Container {
+  padding-left: 40px;
+  padding-right: 40px;
+  height: auto;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 80px;
+}
+
+#Form_Holder {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+#Login_Pass {
+  margin-top: 25px;
+}
+
+.btn {
+  margin-top: 25px;
+  width: 75%;    
+  height: 35px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.main-btn {
+  font-size: 28px;
+  color: var(--lighttan);
+}
+
+.sub-btn {
+  font-size: 20px;
+  color: var(--lighttan);
+}
+
+
+/* Media Queries */
+
+/* Mobile display Format */
+/* @media screen and (max-width: 600px) {
+  
+}
+
+@media screen and (max-width: 1000px) {
+  
+} */
