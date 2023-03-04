@@ -38,16 +38,19 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <>
-      <Route path="/login" component={LoginForm} />
-      <Route path="/signup" component={SignupForm} />
-      </>
-    </Router>
-
+        <>
+          <div className="bg-tan">
+            <section id="Logo_Container" className="bg-brown txt-lighttan flex-centered">
+              Pocket Manager
+            </section>
+            <section id="Content_Container" className="bg-tan30">
+              <Route path="/login" component={LoginForm} />
+              <Route path="/signup" component={SignupForm} />
+            </section>
+          </div>
+        </>
+      </Router>
     </ApolloProvider>
-    
   );
-
 }
-
 export default App;
