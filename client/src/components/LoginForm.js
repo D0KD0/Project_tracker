@@ -1,35 +1,95 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import { Form, Button, Alert } from 'react-bootstrap';
 
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
+
+import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 function LoginForm() {
-  return (
-        <Form id='Form_Holder'>
-          <Form.Group className="" controlId="formBasicEmail">
-            {/* <Form.Label>Email address</Form.Label> */}
-            <Form.Control type="email" placeholder="Enter Email..." />
-            <Form.Text className="text-muted">
-              {/* We'll never share your email with anyone else. */}
-            </Form.Text>
-          </Form.Group>
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [showAlert, setShowAlert] = useState(false);
 
-          <Form.Group className="" controlId="formBasicPassword">
-            {/* <Form.Label>Password</Form.Label> */}
-            <Form.Control type="password" placeholder="Enter Password..." />
-          </Form.Group>
-          {/* <Form.Group className="" controlId="formBasicCheckbox">
+  const [login, { error, data }] = useMutation(LOGIN_USER);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await login({
+        variables: { ...userFormData }
+      });
+
+      console.log(data)
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
+    });
+  };
+  return (
+    <Form id='Form_Holder' onSubmit={handleFormSubmit}>
+      <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+        Something went wrong with your login credentials!
+      </Alert>
+      <Form.Group className="">
+        <Form.Label htmlFor='email'>Email</Form.Label>
+        {/* <Form.Label>Email address</Form.Label> */}
+        <Form.Control
+          type="email"
+          placeholder="Enter Email..."
+          name='email'
+          onChange={handleInputChange}
+          value={userFormData.email}
+          required />
+        <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="" >
+        <Form.Label htmlFor='password'>Password</Form.Label>
+        {/* <Form.Label>Password</Form.Label> */}
+        <Form.Control
+          type="password"
+          placeholder="Enter Password..."
+          name='password'
+          onChange={handleInputChange}
+          value={userFormData.password}
+          required />
+        <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+      </Form.Group>
+      {/* <Form.Group className="" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Save Login" />
           </Form.Group> */}
-          <div id="Login_Button" className="bg-brown flex-centered btn main-btn">
-            Login
-          </div>
-          <div id="Signup_Button" className="flex-centered btn sub-btn">
-            <a>Sign up</a>
-          </div>
-        </Form>
+      <Button
+        type='submit'
+        id="Login_Button"
+        className="bg-brown flex-centered btn main-btn">
+        Login
+      </Button>
+
+      <Link as={Link} to='/signup' id="Login_Button" className="flex-centered btn sub-btn">
+        Sign up
+      </Link>
+    </Form>
   );
 }
 
