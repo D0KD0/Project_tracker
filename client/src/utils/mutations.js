@@ -79,7 +79,7 @@ export const REMOVE_PROJECT = gql`
 `;
 
 export const ADD_TASK = gql`
-  mutation addTask(projectId: ID!, $name: String!, $description: String!, $status: String!, $assignees: [ID], $dueDate: Int, $impact: String, $budget: Float) {
+  mutation addTask($projectId: ID!, $name: String!, $description: String!, $status: String!, $assignees: [ID], $dueDate: Int, $impact: String, $budget: Float) {
     addTask(projectId: $projectId, name: $name, description: $description, status: $status, assignees: $assignees, dueDate: $dueDate, impact: $impact, budget: $budget) {
       _id
       budget
