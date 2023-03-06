@@ -6,24 +6,29 @@ const Navbar = () => {
 	const [isExpanded, setExpendState] = useState(false);
 	const menuItems = [
 		{
-			text: "Dashboard",
-			
+			text: "Project Lists",
+			// icon: "images/message.svg",
+		},
+		{
+			text: "View Tables",
+			// icon: "images/message.svg",
 		},
 		
 		{
-			text: "Project 1",
-			icon: "images/message.svg",
+			text: "View Boards",
+			// icon: "images/message.svg",
 		},
 		{
-			text: "Project 2",
-			icon: "images/folder.svg",
+			text: "+ New Project",
+			//icon: "images/folder.svg",
 		},
 		{
 			text: "+ New Task",
-			
+			//icon: "images/folder.svg",
 		},
         {
-			text: "+ (add other buttons)",
+			
+			// text: "+ (add other buttons)", MORE BUTTONS TO ADD IF NEEDED
 			
 		},
 		
@@ -42,7 +47,7 @@ const Navbar = () => {
 					{isExpanded && (
 						<div className="nav-brand">
 							<img src="" alt="" srcset="" />
-							<h4>LOGO/Brand</h4>
+							<h4>LOGO</h4>
 						</div>
 					)}
 					<button
