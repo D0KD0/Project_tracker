@@ -12,6 +12,7 @@ import SignupForm from './components/SignupForm';
 import Navbar from './components/Navbar';
 import CreateProject from './components/CreateProject';
 import CreateTask from './components/CreateTask';
+import TableView from './components/ViewTable';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -52,6 +53,7 @@ function App() {
               <Route path="/navbar" component={Navbar} />
               <Route path="/CreateProject" component={CreateProject} />
               <Route path="/CreateTask" component={CreateTask} />
+              <Route path="/TableView" component={TableView} />
             </section>
           </div>
         </>
