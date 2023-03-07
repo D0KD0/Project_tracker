@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/D0KD0/Project_tracker/issues"
   },
-  "homepage": "https://github.com/D0KD0/Project_tracker#readme"
+  "homepage": "https://github.com/D0KD0/Project_tracker#readme",
+  "dependencies": {
+    "react-icons": "^4.8.0"
+  }
 }
