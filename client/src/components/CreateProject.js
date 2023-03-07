@@ -56,7 +56,7 @@ function CreateProject() {
         <Form.Group className="" controlId="formProjectName">
           <Form.Control 
             name='projectName' 
-            type="text" 
+            type='text'
             placeholder="Enter Project Name ..." 
             onChange={handleInputChange}
             value={userFormData.email} //fix here 
