@@ -29,6 +29,12 @@ h6 {
   font-style: italic;
 }
 
+.container {
+	background-color: rgb(140, 93, 50);
+	color: rgb(246, 216, 187);
+	font-weight: 300;
+	font-size: 25px;
+}
 
 /* Background colors */
 .bg-tan {
