@@ -20,7 +20,11 @@ function TableView() {
       <tbody>
         <tr>
           <td>1</td>
-          <td><AiFillEdit /></td>
+          <td>
+            <a href='/EditTask' >
+            <AiFillEdit />
+            </a>
+          </td>
           <td>Otto</td>
           <td>@mdo</td>
           <td>@mdo</td>
@@ -31,7 +35,11 @@ function TableView() {
 
         <tr>
           <td>2</td>
-          <td><AiFillEdit /></td>
+          <td>
+            <a href='/EditTask' >
+            <AiFillEdit />
+            </a>
+          </td>
           <td>Otto</td>
           <td>@mdo</td>
           <td>@mdo</td>
@@ -42,7 +50,11 @@ function TableView() {
 
         <tr>
           <td>3</td>
-          <td><AiFillEdit /></td>
+          <td>
+            <a href='/EditTask' >
+            <AiFillEdit />
+            </a>
+          </td>
           <td>Otto</td>
           <td>@mdo</td>
           <td>@mdo</td>
@@ -53,7 +65,11 @@ function TableView() {
 
         <tr>
           <td>4</td>
-          <td><AiFillEdit /></td>
+          <td>
+            <a href='/EditTask' >
+            <AiFillEdit />
+            </a>
+          </td>
           <td>Otto</td>
           <td>@mdo</td>
           <td>@mdo</td>
@@ -64,8 +80,7 @@ function TableView() {
 
         <tr>
           <td>5</td>
-          <td><AiFillEdit /></td>
-          <td colSpan={6}> 
+          <td colSpan={7}> 
             <a href='/CreateTask' >
             <AiOutlinePlus /> New task
             </a>
