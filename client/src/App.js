@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Navbar from './components/Navbar';
+import CreateProject from './components/CreateProject';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -48,6 +49,7 @@ function App() {
               <Route path="/login" component={LoginForm} />
               <Route path="/signup" component={SignupForm} />
               <Route path="/navbar" component={Navbar} />
+              <Route path="/CreateProject" component={CreateProject} />
             </section>
           </div>
         </>
