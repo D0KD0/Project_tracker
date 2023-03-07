@@ -36,6 +36,12 @@ h6 {
 	font-size: 25px;
 }
 
+.taskform {
+	font-size: 35px;
+	text-align: center;
+	text-decoration: underline;
+}
+
 /* Background colors */
 .bg-tan {
   background-color: var(--tan);
