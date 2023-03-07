@@ -1,39 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../index.css";
 
+import { useQuery, useMutation } from '@apollo/client'
+import { GET_ME } from '../utils/queries';
+import { ADD_PROJECT } from '../utils/mutations';
+import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Navbar = () => {
 	const [isExpanded, setExpendState] = useState(false);
-	const menuItems = [
-		{
-			text: "Project Lists",
-			// icon: "images/message.svg",
-		},
-		{
-			text: "View Tables",
-			// icon: "images/message.svg",
-		},
-		
-		{
-			text: "View Boards",
-			// icon: "images/message.svg",
-		},
-		{
-			text: "+ New Project",
-			//icon: "images/folder.svg",
-		},
-		{
-			text: "+ New Task",
-			//icon: "images/folder.svg",
-		},
-        {
-			
-			// text: "+ (add other buttons)", MORE BUTTONS TO ADD IF NEEDED
-			
-		},
-		
-		
-	];
+	const [userData, setUserData] = useState({});
+
+	const { loading, data } = useQuery(GET_ME);
+
+
+
+	useEffect(() => {
+		console.log(userData)
+		setUserData(data?.me || {})
+	}, [data])
+
+	const userDataLength = Object.keys(userData).length;
+
 	return (
 		<div
 			className={
@@ -61,7 +49,7 @@ const Navbar = () => {
 						<span></span>
 					</button>
 				</div>
-				<div className="nav-menu">
+				{/* <div className="nav-menu">
 					{menuItems.map(({ text, icon }) => (
 						<a
 							className={isExpanded ? "menu-item" : "menu-item menu-item-NX"}
@@ -71,24 +59,42 @@ const Navbar = () => {
 							{isExpanded && <p>{text}</p>}
 						</a>
 					))}
+				</div> */}
+				<div className="nav-menu">
+					{userData.projects?.map((project) => {
+						return (<Link
+							as={Link}
+							className={isExpanded ? "menu-item" : "menu-item menu-item-NX"}
+						>
+							{project.name}
+						</Link>);
+
+					})}
+					<Link
+						as={Link}
+						className={isExpanded ? "menu-item" : "menu-item menu-item-NX"}
+						to='/createProject'
+					>
+						+ Add Project
+					</Link>
 				</div>
 			</div>
 			<div className="nav-footer">
 				{isExpanded && (
 					<div className="nav-details">
-						<img
+						{/* <img
 							className="nav-footer-avatar"
 							src="icons/admin-avatar.svg"
 							alt=""
 							srcset=""
-						/>
+						/> */}
 						<div className="nav-footer-info">
 							<p className="nav-footer-user-name">UserName</p>
-							
+
 						</div>
 					</div>
 				)}
-				<img className="logout-icon" src="/images/logout.png" alt="" srcset="" />
+				{/* <img className="logout-icon" src="/images/logout.png" alt="" srcset="" /> */}
 			</div>
 		</div>
 	);

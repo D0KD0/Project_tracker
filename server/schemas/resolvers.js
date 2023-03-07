@@ -3,24 +3,27 @@ const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const Project = require('../models/Project');
 const Task = require('../models/Task');
-
+const mongoose = require("mongoose");
 const resolvers = {
     Query: {
         users: async () => {
-            return User.find().populate('projects');
+            return User.find().populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
         },
         user: async (parent, { email }) => {
             return User.findOne({ email }).populate('projects');
         },
         me: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('projects');
+                return User.findOne({ _id: context.user._id }).populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
             }
             throw new AuthenticationError('You need to be logged in!');
         },
         project: async (parent, {projectId}) => {
             return Project.findOne({_id: projectId}).populate("tasks");
-        }
+        },
+        projects: async () => {
+            return Project.find().populate('tasks').populate({path: "members", model: "User"});
+        },
     },
 
     Mutation: {
@@ -48,13 +51,21 @@ const resolvers = {
         },
         addProject: async (parent, {name, members, budget}, context) => {
             if (context.user) {
+                members = members.map(member => {return mongoose.Types.ObjectId(member)})
+                const project = await Project.create({name, members, budget});
 
+                members.map(async (member)  =>  {
+                    return await User.findOneAndUpdate(
+                        {_id: member},
+                        {$push: {projects: project._id}},
+                        {new: true}
+                    ).populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
+                })
                 const user = await User.findOneAndUpdate(
                     {_id: context.user._id},
-                    {$addToSet: {projects: {name, members, budget}}},
+                    {$push: {projects: project._id}},
                     {new: true}
-                );
-
+                ).populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
                 return user;
             }
 

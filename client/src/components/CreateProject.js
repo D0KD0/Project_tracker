@@ -1,102 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Container, Row, Figure, Button } from 'react-bootstrap';
 
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
+import { ADD_PROJECT } from '../utils/mutations';
+import { QUERY_USERS,  GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 function CreateProject() {
-  // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+    // set initial form state
+    const [projectFormData, setProjectFormData] = useState({ name: '', members: [], memberName: [], budget: 0 });
 
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
+    // set state for alert
+    const [showAlert, setShowAlert] = useState(false);
 
-  const [createUser, { error, data }] = useMutation(ADD_USER);
+    const [userList, setUserList] = useState([]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
-  };
+    const [userData, setUserData] = useState({});
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    const [addProject, { error }] = useMutation(ADD_PROJECT);
 
-    try {
-      const { data } = await createUser({
-        variables: { ...userFormData }
-      });
+    const { loading, data } = useQuery(QUERY_USERS);
 
+    const { data:myInfo } = useQuery(GET_ME);
 
+    useEffect(() => {
+        setUserData(myInfo?.me || {})
+      }, [myInfo])
 
-      Auth.login(data.createUser.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    useEffect(() => {
+        setUserList(data?.users || [])
+    }, [data])
 
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
-  };
+    const handleInputChange = (event) => {
+        let { name, value } = event.target;
+        if (name === "budget") value = parseFloat(value);
+        setProjectFormData({ ...projectFormData, [name]: value });
+    };
 
-  return (
-    <>
-      <Figure class="container"> New Project </Figure>
-      <Form id='Form_Holder' onSubmit={handleFormSubmit}>
-        <Form.Group className="" controlId="formProjectName">
-          <Form.Control 
-            name='projectName' 
-            type="text" 
-            placeholder="Enter Project Name ..." 
-            onChange={handleInputChange}
-            value={userFormData.email} //fix here 
-            required/>
-          <Form.Control.Feedback type='invalid'>Project name is required!</Form.Control.Feedback>
-        </Form.Group>
+    const handleSelect = (event) => {
+        const { name, value } = event.target;
+        const user = userList.find(user => user.username === value)
+        setProjectFormData({ ...projectFormData, [name]: [...projectFormData.memberName, value], "members": [...projectFormData.members, user._id] });
+        setUserList(userList.filter(user => user.username !== value))
+        event.target.value = ""
+    };
 
-        <Form.Group className="" controlId="formProjectBudget">
-          <Form.Control 
-            name='projectBudget'  
-            type='text' 
-            placeholder="Enter Project Budget ..." 
-            onChange={handleInputChange}
-            value={userFormData.username}
-            required/>
-          <Form.Control.Feedback type='invalid'>Project budget is required!</Form.Control.Feedback>
-        </Form.Group>
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        <Form.Group className="" controlId="formProjectMembers">
-          <Form.Control 
-            name='projectMemger' 
-            type="text" 
-            placeholder="Enter Project Members..." 
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'>Project member is required!</Form.Control.Feedback>
-        </Form.Group>
+        if (!token) {
+            return false;
+        }
 
-         <Button
-          type='submit'
-          id="createProject_Button"
-          className="bg-brown flex-centered btn main-btn">
-          Submit
-        </Button>
+        try {
+            const { data } = await addProject({
+                variables: {
+                    ...projectFormData 
+                },
+            });
+        } catch (err) {
+            console.error(err);
+            setShowAlert(true);
+        }
 
-      </Form>
-    </>
+        setProjectFormData({
+            name: '',
+            memberName: [],
+            members: [],
+            budget: 0,
+        });
+    };
 
-  );
+    return (
+        <>
+            <Figure class="container"> New Project </Figure>
+            <Form id='Form_Holder' onSubmit={handleFormSubmit}>
+                <Form.Group className="" >
+                    <Form.Label htmlFor='name'>Name</Form.Label>
+                    <Form.Control
+                        name='name'
+                        type="text"
+                        placeholder="Enter Project Name..."
+                        onChange={handleInputChange}
+                        value={projectFormData.name}
+                        required />
+                    <Form.Control.Feedback type='invalid'>Project Name is required!</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group className="" >
+                    <Form.Label htmlFor='budget'>Budget</Form.Label>
+                    <Form.Control
+                        name='budget'
+                        type='text'
+                        placeholder="Enter Project Budget ..."
+                        onChange={handleInputChange}
+                        value={projectFormData.budget}
+                        required />
+                    <Form.Control.Feedback type='invalid'>Project budget is required!</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group className="">
+                    <Form.Label htmlFor='members'>Members</Form.Label>
+                    <Form.Control as="select" name='memberName' onInput={handleSelect}>
+                        <option value="">Select members</option>
+                        {userList.map(user => {
+                            if (userData.username !== user.username) {
+                                return (
+                                    <option value={user.username} >{user.username}</option>
+                                );
+                            }
+                            
+                        })}
+                    </Form.Control>
+
+                    <Form.Control
+                        name='members'
+                        type='text'
+                        placeholder="Members"
+                        value={projectFormData.memberName}
+                         />
+
+                </Form.Group>
+
+                <Button
+                    type='submit'
+                    id="createProject_Button"
+                    className="bg-brown flex-centered btn main-btn">
+                    Submit
+                </Button>
+
+            </Form>
+        </>
+
+    );
 }
 
 export default CreateProject;
