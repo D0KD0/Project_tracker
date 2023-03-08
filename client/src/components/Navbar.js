@@ -65,6 +65,7 @@ const Navbar = () => {
 						return (<Link
 							as={Link}
 							className={isExpanded ? "menu-item" : "menu-item menu-item-NX"}
+							to={`/project/${project._id}/TableView`}
 						>
 							{project.name}
 						</Link>);
@@ -92,6 +93,7 @@ const Navbar = () => {
 							<p className="nav-footer-user-name">UserName</p>
 
 						</div>
+						<Link onClick={Auth.logout}>Logout</Link>
 					</div>
 				)}
 				{/* <img className="logout-icon" src="/images/logout.png" alt="" srcset="" /> */}

@@ -60,6 +60,7 @@ function CreateProject() {
                     ...projectFormData 
                 },
             });
+
         } catch (err) {
             console.error(err);
             setShowAlert(true);
@@ -71,6 +72,7 @@ function CreateProject() {
             members: [],
             budget: 0,
         });
+        window.location.assign('/');
     };
 
     return (
