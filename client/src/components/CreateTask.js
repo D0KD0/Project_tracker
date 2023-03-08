@@ -1,52 +1,82 @@
-import React, { useState } from 'react';
-import { Form, Container, Row, Figure, Button, Dropdown } from 'react-bootstrap';
-
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+import React, { useState, useEffect } from 'react';
+import { Form, Container, Row, Figure, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
+import { ADD_TASK } from '../utils/mutations';
+import { QUERY_SINGLE_PROJECTS } from '../utils/queries';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 function CreateTask() {
-  // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+
+  const { projectId } = useParams();
+  const { loading, data } = useQuery(QUERY_SINGLE_PROJECTS, {
+    // pass URL parameter
+    variables: { projectId: projectId },
+  });
+  const [assigneeList, setAssigneeList] = useState([]);
+
+  const [projectData, setProjectData] = useState({ name: '', members: [], budget: 0 });
+
+  useEffect(() => {
+    setProjectData(data?.project || {})
+    setAssigneeList(data?.project?.members)
+  }, [data])
+
+  const [tasksFormData, setTaskFormData] = useState({ name: '', description: '', project: '', creator: '', assignees: [], assigneeName: [], status: '', dueDate: '', impact: '', budget: 0 });
 
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [createUser, { error, data }] = useMutation(ADD_USER);
+  const [addTask, { error }] = useMutation(ADD_TASK);
+
+
+
+
 
   const handleInputChange = (event) => {
+    let { name, value } = event.target;
+    if (name === "budget") value = parseFloat(value);
+    if (name === "dueDate") value = (new Date(value)).getTime()
+    setTaskFormData({ ...tasksFormData, [name]: value });
+  };
+
+  const handleSelect = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    const user = assigneeList.find(user => user.username === value)
+    setTaskFormData({ ...tasksFormData, [name]: [...tasksFormData.assigneeName, value], "assignees": [...tasksFormData.assignees, user._id] });
+    setAssigneeList(assigneeList.filter(user => user.username !== value))
+    event.target.value = ""
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
     }
 
     try {
-      const { data } = await createUser({
-        variables: { ...userFormData }
+      const { data } = await addTask({
+        variables: {
+          projectId: projectId,
+          ...tasksFormData
+        },
       });
 
-
-
-      Auth.login(data.createUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
     }
 
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
+    setTaskFormData({
+      name: '',
+      memberName: [],
+      members: [],
+      budget: 0,
     });
+    // window.location.assign('/');
   };
 
   return (
@@ -54,95 +84,101 @@ function CreateTask() {
       <Figure class="container"> Project Name </Figure>
       <p class="taskform">Task Form</p>
       <Form id='Form_Holder' onSubmit={handleFormSubmit}>
-        <Form.Group className="" controlId="formTaskName">
-          <Form.Control 
-            name='projectName' 
+        <Form.Label htmlFor='name'>Task Name</Form.Label>
+        <Form.Group className="" >
+          <Form.Control
+            name='name'
             type='text'
-            placeholder="Enter Task Name ..." 
+            placeholder="Enter Task Name ..."
             onChange={handleInputChange}
-            value={userFormData.email} //fix here 
-            required/>
+            value={tasksFormData.name}
+            required />
           <Form.Control.Feedback type='invalid'>Task name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formCreatorName">
-          <Form.Control 
-            name='taskCreator'  
-            type='text' 
-            placeholder="Enter Creator Name ..." 
+        <Form.Group className="" >
+          <Form.Label htmlFor='assignees'>Assignees</Form.Label>
+          <Form.Control as="select" name='assigneeName' onInput={handleSelect}>
+            <option value="">Select Assignees</option>
+            {assigneeList?.map(member => {
+                return (
+                  <option value={member.username} >{member.username}</option>
+                );
+
+            })}
+          </Form.Control>
+
+          <Form.Control
+            name='assignees'
+            type="text"
+            placeholder="Asignee Name ..."
             onChange={handleInputChange}
-            value={userFormData.username}
-            required/>
-          <Form.Control.Feedback type='invalid'>Creator name is required!</Form.Control.Feedback>
+            value={tasksFormData.assigneeName}
+            readOnly />
+
+          <Form.Control.Feedback type='invalid'>Assignee name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formAsigneeName">
-          <Form.Control 
-            name='taskAsignee' 
-            type="text" 
-            placeholder="Enter Asignee Name ..." 
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'>Assignee name is required!</Form.Control.Feedback>
+        <Form.Group className="" >
+          <Form.Label htmlFor='status'>Status</Form.Label>
+          <Form.Control as="select" name='status' onInput={handleInputChange}>
+            <option value="">Select Status</option>
+            <option value="New">New</option>
+            <option value="Planned">Planned</option>
+            <option value="In Progress">In Progress</option>
+            <option value="In Review">In Review</option>
+            <option value="Completed">Completed</option>
+          </Form.Control>
+          <Form.Control.Feedback type='invalid'> Project status is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formProrjectStatus">
-          <Form.Control 
-            name='projectStatus' 
-            type="text" 
-            placeholder="Enter Project Status ..." 
+        <Form.Group className="" >
+          <Form.Label htmlFor='dueDate'>Due Date</Form.Label>
+          <Form.Control
+            name='dueDate'
+            type="date"
+            placeholder="Enter due date..."
             onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'> Project status is required!</Form.Control.Feedback>
+            value={tasksFormData.password}
+            required />
+          <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formDueDate">
-          <Form.Control 
-            name='taskDueDate' 
-            type="date" 
-            placeholder="Enter due date..." 
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
+        <Form.Group className="" >
+          <Form.Label htmlFor='impact'>Impact</Form.Label>
+          <Form.Control as="select" name='impact' onInput={handleInputChange}>
+            <option value="">Select Impact</option>
+            <option value="High">High</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Low">Low</option>
+          </Form.Control>
         </Form.Group>
 
-        <Form.Group className="" controlId="formImpactLevel">
-          <Form.Control 
-            name='taskImpactLevel' 
-            type="text" 
-            placeholder="High/Moderate/Low" 
+        <Form.Group className="" >
+          <Form.Label htmlFor='budget'>Budget</Form.Label>
+          <Form.Control
+            name='budget'
+            type="text"
+            placeholder="Enter budget ..."
             onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
+            value={tasksFormData.budget}
+            required />
+          <Form.Control.Feedback type='invalid'> Budget is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formTaskBudget">
-          <Form.Control 
-            name='taskBudget' 
-            type="text" 
-            placeholder="Enter budget ..." 
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group className="" controlId="formTaskDescription">
-          <Form.Control 
-            name='taskDescription' 
+        <Form.Group className="" >
+          <Form.Label htmlFor='description'>Description</Form.Label>
+          <Form.Control
+            name='description'
             as="textarea"
-            placeholder="Enter Description ..." 
+            placeholder="Enter Description ..."
             onChange={handleInputChange}
-            value={userFormData.password}
-            required/>
-            <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
+            value={tasksFormData.description}
+            required />
+          <Form.Control.Feedback type='invalid'> Description is required!</Form.Control.Feedback>
         </Form.Group>
 
-         <Button
+        <Button
           type='submit'
           id="createProject_Button"
           className="bg-brown flex-centered btn main-btn">

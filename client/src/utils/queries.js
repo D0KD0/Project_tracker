@@ -47,7 +47,7 @@ export const QUERY_USER = gql`
 
 
 export const QUERY_SINGLE_PROJECTS = gql`
-  query getSingleProjects($projectId: ID!) {
+  query project($projectId: ID!) {
     project(projectId: $projectId) {
         _id
         budget
@@ -59,10 +59,6 @@ export const QUERY_SINGLE_PROJECTS = gql`
             email
           }
           budget
-          creator {
-            email
-            username
-          }
           description
           dueDate
           impact
@@ -70,6 +66,7 @@ export const QUERY_SINGLE_PROJECTS = gql`
           status
         }
         members {
+          _id
           email
           username
         }

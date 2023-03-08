@@ -59,7 +59,7 @@ function App() {
                   <Navbar />
                   <Switch>
                     <Route path="/CreateProject" component={CreateProject} />
-                    <Route path="/CreateTask" component={CreateTask} />
+                    <Route path="/project/:projectId/CreateTask" component={CreateTask} />
                     <Route path="/project/:projectId/TableView" component={TableView} />
                     <Route path="/EditTask" component={EditTask} />
                   </Switch>

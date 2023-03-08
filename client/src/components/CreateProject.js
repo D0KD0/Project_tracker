@@ -8,9 +8,7 @@ import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 function CreateProject() {
-    // set initial form state
-    const [projectFormData, setProjectFormData] = useState({ name: '', members: [], memberName: [], budget: 0 });
-
+    
     // set state for alert
     const [showAlert, setShowAlert] = useState(false);
 
@@ -26,11 +24,15 @@ function CreateProject() {
 
     useEffect(() => {
         setUserData(myInfo?.me || {})
+        setProjectFormData({ ...projectFormData, "members": [...projectFormData.members, myInfo?.me._id] });
       }, [myInfo])
 
     useEffect(() => {
         setUserList(data?.users || [])
     }, [data])
+
+    // set initial form state
+    const [projectFormData, setProjectFormData] = useState({ name: '', members: [], memberName: [], budget: 0 });
 
     const handleInputChange = (event) => {
         let { name, value } = event.target;
