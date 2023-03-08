@@ -153,18 +153,6 @@ a {
 }
 
 
-/* Media Queries */
-
-/* Mobile display Format */
-/* @media screen and (max-width: 600px) {
-  
-}
-
-@media screen and (max-width: 1000px) {
-  
-} */
-
-
 /*########################*/
 /* SIDE NAVIGATION BAR */
 /*########################*/
@@ -324,3 +312,181 @@ a {
 
 /*### END OF SIDE NAVBAR ####*/
 /*########################*/
+
+
+.container {
+	background-color: rgb(140, 93, 50);
+	color: rgb(246, 216, 187);
+	font-weight: 300;
+	font-size: 25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modal-content {
+  background-color: rgb(222, 223, 223);
+  padding: 20px;
+  border-radius: 5px;
+	max-width: 400px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+	/* border: solid 2px red; */
+}
+
+.modal-content {
+  position: relative;
+}
+
+.modalTitle{
+	font-size: 2rem;
+	padding-bottom: 1rem;
+}
+
+.modalSubmit {
+	margin-top: 1rem;
+	width: 50%;
+	align-self: center;
+}
+
+.close {
+	align-self: flex-end;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+	padding-right: 2rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+	justify-content: flex-end;
+}
+
+.openModal {
+	background-color: white;
+	width: fit-content;
+	padding: .25rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Kanban Board */
+
+.kanban-board {
+	background-color: rgb(38, 42, 97);
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+
+}
+
+.columnBox {
+	background-color:rgb(141, 141, 137);
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.column {
+	margin: 2rem;
+	padding: 1rem;
+	border: solid 5px red;
+	flex-direction: column;
+	flex: 1;
+}
+
+.column-title {
+	border: solid 5px purple;
+	font-size: 1rem;
+	flex: 1;
+}
+
+
+.column-tasks {
+	border: solid 5px orange;
+	flex: 1;
+}
+
+.task {
+	border: solid 5px rgb(0, 0, 0);
+	margin: .25rem;
+	font-size: 1rem;
+	text-align: start;
+	text-decoration: none;
+}
+
+.taskTitle {
+	border: solid 5px rgb(0, 255, 0);
+	margin: 1rem;
+}
+
+.taskDesc {
+	border: solid 5px rgb(0, 174, 255);
+	margin: 1rem;
+}
+
+.taskCreator {
+	border: solid 5px rgb(255, 58, 157);
+	margin: 1rem;
+	font-size: 1rem;
+}
+
+@media screen and (max-width: 650){
+	
+}
+
+@media screen and (max-width: 1000px){
+	.kanban-board {
+		flex-wrap: none;
+	}
+	
+	.columnBox {
+		flex-wrap: none;
+		flex-direction: column;
+	}
+
+	.column {
+		margin: .5rem;
+		padding: .5rem;
+	}
+}

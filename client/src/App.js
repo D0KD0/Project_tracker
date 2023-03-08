@@ -14,6 +14,7 @@ import CreateProject from './components/CreateProject';
 import CreateTask from './components/CreateTask';
 import TableView from './components/ViewTable';
 import EditTask from './components/EditTask';
+import KanbanBoard from './components/DnD/Board';
 
 import Auth from './utils/auth';
 import LandingPage from './components/LandingPage';
@@ -47,7 +48,6 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <>
-
           <div className="bg-tan">
             <section id="Logo_Container" className="bg-brown txt-lighttan flex-centered">
               Pocket Manager
@@ -62,6 +62,7 @@ function App() {
                     <Route path="/project/:projectId/CreateTask" component={CreateTask} />
                     <Route path="/project/:projectId/TableView" component={TableView} />
                     <Route path="/EditTask" component={EditTask} />
+                    <Route path="/project/:projectId/kanban" component={KanbanBoard} /> {/* Use the KanbanBoard component */}
                   </Switch>
                 </section>
               </>
@@ -72,16 +73,11 @@ function App() {
                 <Route path="/signup" component={SignupForm} />
               </section>
             )}
-
-
-
-
           </div>
-
-
         </>
       </Router>
     </ApolloProvider>
   );
 }
+
 export default App;
