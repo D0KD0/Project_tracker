@@ -26,7 +26,7 @@ const typeDefs = gql`
         creator: User
         assignees: [User]
         status: String!
-        dueDate: Int
+        dueDate: Float
         impact: String
         budget: Float
     }
@@ -49,7 +49,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addProject(name: String!, members: [ID], budget: Float): User
         removeProject(projectId: ID!): User
-        addTask(projectId: ID!, name: String!, description: String!, assignees: [ID], status: String!, dueDate: Int, impact: String, budget: Float): Project
+        addTask(projectId: ID!, name: String!, description: String!, assignees: [ID], status: String!, dueDate: Float, impact: String, budget: Float): Project
         removeTask(projectId: ID!, taskId: ID!): Project
     }
 `;

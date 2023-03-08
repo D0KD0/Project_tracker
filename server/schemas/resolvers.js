@@ -19,7 +19,7 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!');
         },
         project: async (parent, {projectId}) => {
-            return Project.findOne({_id: projectId}).populate("tasks");
+            return Project.findOne({_id: projectId}).populate({path: "members", model: "User"}).populate({path: "tasks", populate: {path: "assignees", model: "User"}});
         },
         projects: async () => {
             return Project.find().populate('tasks').populate({path: "members", model: "User"});
@@ -51,6 +51,7 @@ const resolvers = {
         },
         addProject: async (parent, {name, members, budget}, context) => {
             if (context.user) {
+                console.log(members)
                 members = members.map(member => {return mongoose.Types.ObjectId(member)})
                 const project = await Project.create({name, members, budget});
 
@@ -90,12 +91,14 @@ const resolvers = {
         },
         addTask: async (parent, {projectId, name, description, assignees, status, dueDate, impact, budget}, context) => {
             if (context.user) {
-
+                assignees = assignees.map(assignee => {return mongoose.Types.ObjectId(assignee)})
+                const task = await Task.create({name, description, assignees, status, dueDate, impact, budget});
+                console.log(task)
                 const project = await Project.findOneAndUpdate(
                     {_id: projectId},
-                    {$addToSet: {tasks: {name, description, assignees, status, dueDate, impact, budget}}},
+                    {$push: {tasks: task._id}},
                     {new: true}
-                );
+                ).populate('tasks').populate({path: "tasks", populate: {path: "assignees", model: "User"}});
 
                 return project;
             }

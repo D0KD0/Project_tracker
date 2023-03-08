@@ -27,39 +27,25 @@ export const ADD_USER = gql`
 export const ADD_PROJECT = gql`
   mutation addProject($name: String!, $members: [ID], $budget: Float) {
     addProject(name: $name, members: $members, budget: $budget) {
-      projects {
+      _id
+      name
+      budget
+    
+      tasks {
         _id
         budget
+        description
+        dueDate
+        impact
         name
-        members {
+        status
+        assignees {
           _id
           email
           username
         }
-        tasks {
-          _id
-          assignees {
-            _id
-            email
-            username
-          }
-          budget
-          creator {
-            _id
-            email
-            username
-          }
-          description
-          dueDate
-          impact
-          name
-          status
-        }
       }
-      _id
-      email
-      username
-    }
+    } 
   }
 `;
 
@@ -79,16 +65,11 @@ export const REMOVE_PROJECT = gql`
 `;
 
 export const ADD_TASK = gql`
-  mutation addTask($projectId: ID!, $name: String!, $description: String!, $status: String!, $assignees: [ID], $dueDate: Int, $impact: String, $budget: Float) {
+  mutation addTask($projectId: ID!, $name: String!, $description: String!, $status: String!, $assignees: [ID], $dueDate: Float, $impact: String, $budget: Float) {
     addTask(projectId: $projectId, name: $name, description: $description, status: $status, assignees: $assignees, dueDate: $dueDate, impact: $impact, budget: $budget) {
       _id
       budget
       name
-      members {
-        email
-        username
-        _id
-      }
       tasks {
         _id
         budget
