@@ -54,8 +54,11 @@ function SignupForm() {
 
   return (
     <>
+    <section className='signup-intro'><p >Create account and start managing your tasks!</p></section>
+    <div className='signup-box'>
+      
       <Form id='Form_Holder' onSubmit={handleFormSubmit}>
-        <Form.Group className="" controlId="formBasicEmail">
+        <Form.Group className="email_text" controlId="formBasicEmail">
           <Form.Label htmlFor='email'>Email</Form.Label>
           {/* <Form.Label>Email address</Form.Label> */}
           <Form.Control 
@@ -68,7 +71,7 @@ function SignupForm() {
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formBasicUsername">
+        <Form.Group className="user-text" controlId="formBasicUsername">
           <Form.Label htmlFor='username'>Username</Form.Label>
           {/* <Form.Label>Email address</Form.Label> */}
           <Form.Control 
@@ -84,7 +87,7 @@ function SignupForm() {
           <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formBasicPassword">
+        <Form.Group className="password_text" controlId="formBasicPassword">
           <Form.Label htmlFor='password'>Password</Form.Label>
           {/* <Form.Label>Password</Form.Label> */}
           <Form.Control 
@@ -97,7 +100,7 @@ function SignupForm() {
             <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formBasicPassword">
+        <Form.Group className="confirm-text" controlId="formBasicPassword">
           <Form.Label htmlFor='password'>Confirm Password</Form.Label>
           {/* <Form.Label>Password</Form.Label> */}
           <Form.Control name='confirmPassword' type="password" placeholder="Confirm Password..." />
@@ -116,6 +119,7 @@ function SignupForm() {
           Login
         </Link>
       </Form>
+      </div>
     </>
 
   );

@@ -79,9 +79,10 @@ function CreateProject() {
 
     return (
         <>
-            <Figure class="container"> New Project </Figure>
-            <Form id='Form_Holder' onSubmit={handleFormSubmit}>
-                <Form.Group className="" >
+        <div style={{marginLeft:"150px"}} className="createnew-box">
+            <h4 className='newpro_cont'> New Project </h4>
+            <Form style={{backgroundColor:"whitesmoke", width:"150%"}} id='create-formfolder' onSubmit={handleFormSubmit}>
+                <Form.Group className="user-text" >
                     <Form.Label htmlFor='name'>Name</Form.Label>
                     <Form.Control
                         name='name'
@@ -93,7 +94,7 @@ function CreateProject() {
                     <Form.Control.Feedback type='invalid'>Project Name is required!</Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="" >
+                <Form.Group className="budget-text" >
                     <Form.Label htmlFor='budget'>Budget</Form.Label>
                     <Form.Control
                         name='budget'
@@ -105,7 +106,7 @@ function CreateProject() {
                     <Form.Control.Feedback type='invalid'>Project budget is required!</Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="">
+                <Form.Group className="member-text">
                     <Form.Label htmlFor='members'>Members</Form.Label>
                     <Form.Control as="select" name='memberName' onInput={handleSelect}>
                         <option value="">Select members</option>
@@ -127,15 +128,16 @@ function CreateProject() {
                          />
 
                 </Form.Group>
-
-                <Button
+            <div className='end-btn'>
+               <Button
                     type='submit'
                     id="createProject_Button"
                     className="bg-brown flex-centered btn main-btn">
                     Submit
                 </Button>
-
+            </div>
             </Form>
+            </div>
         </>
 
     );

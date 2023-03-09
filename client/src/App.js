@@ -14,10 +14,12 @@ import CreateProject from './components/CreateProject';
 import CreateTask from './components/CreateTask';
 import TableView from './components/ViewTable';
 import EditTask from './components/EditTask';
+import logo from './images/logoPM.png'
 import KanbanBoard from './components/DnD/Board';
 
 import Auth from './utils/auth';
 import LandingPage from './components/LandingPage';
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -28,6 +30,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -44,13 +47,16 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const  imageStyle ={height:"75px", width:"70px" }
   return (
     <ApolloProvider client={client}>
       <Router>
         <>
+          
           <div className="bg-tan">
             <section id="Logo_Container" className="bg-brown txt-lighttan flex-centered">
-              Pocket Manager
+              <img style={imageStyle} src={logo} alt="" srcset="" />
+              <h3 className='brandname'>Pocket Manager</h3>
             </section>
 
             {Auth.loggedIn() ? (
@@ -67,10 +73,11 @@ function App() {
                 </section>
               </>
             ) : (
-              <section id="Content_Container" className="bg-tan30">
+              <section id="" className="bg-tan-30">
                 <Route path="/login" component={LoginForm} />
                 <Route path="/" component={LandingPage} />
                 <Route path="/signup" component={SignupForm} />
+                
               </section>
             )}
           </div>

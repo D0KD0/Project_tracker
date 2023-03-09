@@ -47,11 +47,13 @@ function LoginForm() {
     });
   };
   return (
+    
+    <div className='loginCont'>
     <Form id='Form_Holder' onSubmit={handleFormSubmit}>
       <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
         Something went wrong with your login credentials!
       </Alert>
-      <Form.Group className="">
+      <Form.Group className="email_text">
         <Form.Label htmlFor='email'>Email</Form.Label>
         {/* <Form.Label>Email address</Form.Label> */}
         <Form.Control
@@ -64,7 +66,7 @@ function LoginForm() {
         <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="" >
+      <Form.Group className="password_text" >
         <Form.Label htmlFor='password'>Password</Form.Label>
         {/* <Form.Label>Password</Form.Label> */}
         <Form.Control
@@ -85,11 +87,14 @@ function LoginForm() {
         className="bg-brown flex-centered btn main-btn">
         Login
       </Button>
-
+      <div>
+        <p className='signup-p'>Don't have an account? </p>
       <Link as={Link} to='/signup' id="Login_Button" className="flex-centered btn sub-btn">
         Sign up
       </Link>
+      </div>
     </Form>
+    </div>
   );
 }
 

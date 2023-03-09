@@ -6,6 +6,7 @@ import { GET_ME } from '../utils/queries';
 import { ADD_PROJECT } from '../utils/mutations';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
+import logo from "../images/logout.png";
 
 const Navbar = () => {
 	const [isExpanded, setExpendState] = useState(false);
@@ -13,6 +14,8 @@ const Navbar = () => {
 
 	const { loading, data } = useQuery(GET_ME);
 
+const logoStyle={color: ""}
+const  imageStyle ={height:"25px", width:"70px"}
 
 
 	useEffect(() => {
@@ -34,8 +37,8 @@ const Navbar = () => {
 				<div className="nav-heading">
 					{isExpanded && (
 						<div className="nav-brand">
-							<img src="" alt="" srcset="" />
-							<h4>LOGO</h4>
+							{/*<img style={imageStyle} src={logo} alt="" srcset="" />*/}
+							<h4 style={logoStyle}>{userData.username}</h4>
 						</div>
 					)}
 					<button
@@ -83,17 +86,17 @@ const Navbar = () => {
 			<div className="nav-footer">
 				{isExpanded && (
 					<div className="nav-details">
+						<Link onClick={Auth.logout} className="logout-btn">Logout</Link>
 						{/* <img
 							className="nav-footer-avatar"
 							src="icons/admin-avatar.svg"
 							alt=""
 							srcset=""
 						/> */}
-						<div className="nav-footer-info">
-							<p className="nav-footer-user-name">UserName</p>
-
-						</div>
-						<Link onClick={Auth.logout}>Logout</Link>
+						{/*<div className="nav-footer-info">
+							<Link onClick={Auth.logout} className="logout-btn">Logout</Link>
+						</div>*/}
+						
 					</div>
 				)}
 				{/* <img className="logout-icon" src="/images/logout.png" alt="" srcset="" /> */}

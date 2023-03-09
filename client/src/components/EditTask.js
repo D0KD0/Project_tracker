@@ -51,10 +51,11 @@ function EditTask() {
 
   return (
     <>
-      <Figure class="container"> Project Name </Figure>
+    
+      <div style={{marginLeft:"150px"}} class="Project-name"> <h4 className='project-name'>Project Name</h4>
       <p class="taskform">Task Form</p>
       <Form id='Form_Holder' onSubmit={handleFormSubmit}>
-        <Form.Group className="" controlId="formTaskName">
+        <Form.Group className="edit-input" controlId="formTaskName">
           <Form.Control 
             name='projectName' 
             type='text'
@@ -65,7 +66,7 @@ function EditTask() {
           <Form.Control.Feedback type='invalid'>Task name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formCreatorName">
+        <Form.Group className="edit-input" controlId="formCreatorName">
           <Form.Control 
             name='taskCreator'  
             type='text' 
@@ -76,7 +77,7 @@ function EditTask() {
           <Form.Control.Feedback type='invalid'>Creator name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formAsigneeName">
+        <Form.Group className="edit-input" controlId="formAsigneeName">
           <Form.Control 
             name='taskAsignee' 
             type="text" 
@@ -87,7 +88,7 @@ function EditTask() {
             <Form.Control.Feedback type='invalid'>Assignee name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formProrjectStatus">
+        <Form.Group className="edit-input" controlId="formProrjectStatus">
           <Form.Control 
             name='projectStatus' 
             type="text" 
@@ -98,7 +99,7 @@ function EditTask() {
             <Form.Control.Feedback type='invalid'> Project status is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formDueDate">
+        <Form.Group className="edit-input" controlId="formDueDate">
           <Form.Control 
             name='taskDueDate' 
             type="date" 
@@ -109,7 +110,7 @@ function EditTask() {
             <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formImpactLevel">
+        <Form.Group className="edit-input" controlId="formImpactLevel">
           <Form.Control 
             name='taskImpactLevel' 
             type="text" 
@@ -120,7 +121,7 @@ function EditTask() {
             <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formTaskBudget">
+        <Form.Group className="edit-input" controlId="formTaskBudget">
           <Form.Control 
             name='taskBudget' 
             type="text" 
@@ -131,7 +132,7 @@ function EditTask() {
             <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" controlId="formTaskDescription">
+        <Form.Group className="edit-input" controlId="formTaskDescription">
           <Form.Control 
             name='taskDescription' 
             as="textarea"
@@ -141,15 +142,16 @@ function EditTask() {
             required/>
             <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
-
+      <div className='end-btn'>
          <Button
           type='submit'
           id="createProject_Button"
           className="bg-brown flex-centered btn main-btn">
           Submit
         </Button>
-
+      </div>
       </Form>
+      </div>
     </>
 
   );

@@ -44,7 +44,7 @@ function TableView() {
               <tr>
                 <td>{index + 1}</td>
                 <td>
-                  <Link to="/editTask"><AiFillEdit /></Link>
+                  <Link to="/editTask" className='edit-btn'><AiFillEdit /></Link>
                 </td>
                 <td>{task.name}</td>
                 <td>{task.assignees.map(assignee => {
@@ -62,7 +62,7 @@ function TableView() {
         <tr>
           <td></td>
           <td colSpan={7}>
-            <Link to={`/project/${projectId}/CreateTask`} >
+            <Link to={`/project/${projectId}/CreateTask`} className="Newtask">
               <AiOutlinePlus /> New task
             </Link>
           </td>

@@ -81,11 +81,11 @@ function CreateTask() {
 
   return (
     <>
-      <Figure class="container"> {projectData.name} </Figure>
+    <div style={{marginLeft:"150px"}} class="Project-name"> <h4 className='project-name'>{projectData.name}</h4>
       <p class="taskform">Task Form</p>
       <Form id='Form_Holder' onSubmit={handleFormSubmit}>
+        <Form.Group className="tasksinput" >
         <Form.Label htmlFor='name'>Task Name</Form.Label>
-        <Form.Group className="" >
           <Form.Control
             name='name'
             type='text'
@@ -96,7 +96,7 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'>Task name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='assignees'>Assignees</Form.Label>
           <Form.Control as="select" name='assigneeName' onInput={handleSelect}>
             <option value="">Select Assignees</option>
@@ -119,7 +119,7 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'>Assignee name is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='status'>Status</Form.Label>
           <Form.Control as="select" name='status' onInput={handleInputChange}>
             <option value="">Select Status</option>
@@ -132,7 +132,7 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'> Project status is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='dueDate'>Due Date</Form.Label>
           <Form.Control
             name='dueDate'
@@ -144,7 +144,7 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'> Due date is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='impact'>Impact</Form.Label>
           <Form.Control as="select" name='impact' onInput={handleInputChange}>
             <option value="">Select Impact</option>
@@ -154,7 +154,7 @@ function CreateTask() {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='budget'>Budget</Form.Label>
           <Form.Control
             name='budget'
@@ -166,7 +166,7 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'> Budget is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="" >
+        <Form.Group className="tasksinput" >
           <Form.Label htmlFor='description'>Description</Form.Label>
           <Form.Control
             name='description'
@@ -178,14 +178,17 @@ function CreateTask() {
           <Form.Control.Feedback type='invalid'> Description is required!</Form.Control.Feedback>
         </Form.Group>
 
-        <Button
+      
+        <div className='end-btn'>
+         <Button
           type='submit'
           id="createProject_Button"
           className="bg-brown flex-centered btn main-btn">
           Submit
         </Button>
-
+      </div>
       </Form>
+      </div>
     </>
 
   );
