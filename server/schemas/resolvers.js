@@ -62,10 +62,8 @@ const resolvers = {
                         {new: true}
                     ).populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
                 })
-                const user = await User.findOneAndUpdate(
-                    {_id: context.user._id},
-                    {$push: {projects: project._id}},
-                    {new: true}
+                const user = await User.findOne(
+                    {_id: context.user._id}
                 ).populate('projects').populate({path: "projects", populate: {path: "members", model: "User"}});
                 return user;
             }

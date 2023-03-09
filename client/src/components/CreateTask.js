@@ -76,12 +76,12 @@ function CreateTask() {
       members: [],
       budget: 0,
     });
-    // window.location.assign('/');
+    window.location.assign(`/project/${projectId}/TableView`);
   };
 
   return (
     <>
-      <Figure class="container"> Project Name </Figure>
+      <Figure class="container"> {projectData.name} </Figure>
       <p class="taskform">Task Form</p>
       <Form id='Form_Holder' onSubmit={handleFormSubmit}>
         <Form.Label htmlFor='name'>Task Name</Form.Label>

@@ -27,24 +27,19 @@ export const ADD_USER = gql`
 export const ADD_PROJECT = gql`
   mutation addProject($name: String!, $members: [ID], $budget: Float) {
     addProject(name: $name, members: $members, budget: $budget) {
-      _id
-      name
-      budget
-    
-      tasks {
+      projects {
         _id
         budget
-        description
-        dueDate
-        impact
         name
-        status
-        assignees {
+        members {
           _id
           email
           username
         }
       }
+      _id
+      email
+      username
     } 
   }
 `;
