@@ -69,7 +69,7 @@ function App() {
             ) : (
               <section id="Content_Container" className="bg-tan30">
                 <Route path="/login" component={LoginForm} />
-                <Route path="/main" component={LandingPage} />
+                <Route path="/" component={LandingPage} />
                 <Route path="/signup" component={SignupForm} />
               </section>
             )}
