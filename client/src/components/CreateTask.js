@@ -76,7 +76,7 @@ function CreateTask() {
       members: [],
       budget: 0,
     });
-    window.location.replace(`/project/${projectId}/TableView`);
+    window.location.assign(`/project/${projectId}/TableView`);
   };
 
   return (
