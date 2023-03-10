@@ -14,7 +14,7 @@ This project is to build a user-focused MERN app. The web page will let user to 
 * Front-end: HTML, CSS, JavaScript, Bootstrap, REACT, Heroku
 * Back-end : Node.js, Express.js, MongoDB, GraphQL
 ## Screenshot
-
+![screen shot](./client/src/images/screenshot.PNG)
 ## Deployment
 https://project--tracker.herokuapp.com/
 
