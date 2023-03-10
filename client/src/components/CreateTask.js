@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Container, Row, Figure, Button } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_TASK } from '../utils/mutations';
 import { QUERY_SINGLE_PROJECTS } from '../utils/queries';
@@ -9,7 +8,7 @@ import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 function CreateTask() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { projectId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_PROJECTS, {
     // pass URL parameter
@@ -77,7 +76,7 @@ function CreateTask() {
       members: [],
       budget: 0,
     });
-    navigate(`/project/${projectId}/TableView`)
+    history.push(`/project/${projectId}/TableView`)
     // window.location.assign(`/project/${projectId}/TableView`);
   };
 
