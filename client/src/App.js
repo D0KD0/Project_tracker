@@ -77,7 +77,7 @@ function App() {
                 <Route path="/login" component={LoginForm} />
                 <Route path="/main" component={LandingPage} />
                 <Route path="/signup" component={SignupForm} />
-                <Route path="" />
+                <Route path="/" />
               </section>
             )}
           </div>
