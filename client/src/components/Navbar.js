@@ -9,13 +9,13 @@ import Auth from '../utils/auth';
 import logo from "../images/logout.png";
 
 const Navbar = () => {
-	const [isExpanded, setExpendState] = useState(false);
+	const [isExpanded, setExpendState] = useState(true);
 	const [userData, setUserData] = useState({});
 
 	const { loading, data } = useQuery(GET_ME);
 
-const logoStyle={color: ""}
-const  imageStyle ={height:"25px", width:"70px"}
+	const logoStyle = { color: "" }
+	const imageStyle = { height: "25px", width: "70px" }
 
 
 	useEffect(() => {
@@ -96,7 +96,7 @@ const  imageStyle ={height:"25px", width:"70px"}
 						{/*<div className="nav-footer-info">
 							<Link onClick={Auth.logout} className="logout-btn">Logout</Link>
 						</div>*/}
-						
+
 					</div>
 				)}
 				{/* <img className="logout-icon" src="/images/logout.png" alt="" srcset="" /> */}

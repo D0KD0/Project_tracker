@@ -47,12 +47,12 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const  imageStyle ={height:"75px", width:"70px" }
+  const imageStyle = { height: "75px", width: "70px" }
   return (
     <ApolloProvider client={client}>
       <Router>
         <>
-          
+
           <div className="bg-tan">
             <section id="Logo_Container" className="bg-brown txt-lighttan flex-centered">
               <img style={imageStyle} src={logo} alt="" srcset="" />
@@ -63,13 +63,15 @@ function App() {
               <>
                 <section id="Content_Container" className="bg-tan30">
                   <Navbar />
-                  <Switch>
-                    <Route path="/CreateProject" component={CreateProject} />
-                    <Route path="/project/:projectId/CreateTask" component={CreateTask} />
-                    <Route path="/project/:projectId/TableView" component={TableView} />
-                    <Route path="/EditTask" component={EditTask} />
-                    <Route path="/project/:projectId/kanban" component={KanbanBoard} /> {/* Use the KanbanBoard component */}
-                  </Switch>
+                  <section className='container-fluid'>
+                    <Switch>
+                      <Route path="/CreateProject" component={CreateProject} />
+                      <Route path="/project/:projectId/CreateTask" component={CreateTask} />
+                      <Route path="/project/:projectId/TableView" component={TableView} />
+                      <Route path="/EditTask" component={EditTask} />
+                      <Route path="/project/:projectId/kanban" component={KanbanBoard} /> {/* Use the KanbanBoard component */}
+                    </Switch>
+                  </section>
                 </section>
               </>
             ) : (

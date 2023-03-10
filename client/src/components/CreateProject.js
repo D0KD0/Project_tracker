@@ -79,9 +79,9 @@ function CreateProject() {
 
     return (
         <>
-        <div style={{marginLeft:"150px"}} className="createnew-box">
+        <div className=" w-100 createnew-box">
             <h4 className='newpro_cont'> New Project </h4>
-            <Form style={{backgroundColor:"whitesmoke", width:"150%"}} id='create-formfolder' onSubmit={handleFormSubmit}>
+            <Form style={{backgroundColor:"whitesmoke"}} id='create-formfolder' onSubmit={handleFormSubmit}>
                 <Form.Group className="user-text" >
                     <Form.Label htmlFor='name'>Name</Form.Label>
                     <Form.Control

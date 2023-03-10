@@ -202,7 +202,7 @@ margin-top: 10px;
 }
 
 #create-formfolder {
-	margin-top: 20%;
+	margin-top: 5%;
 	border-radius: 10px;
 }
 
@@ -212,7 +212,7 @@ margin-top: 10px;
 	
 }
 .createnew-box {
-	margin-top: 10px;
+	width: max-content;
 }
 
 

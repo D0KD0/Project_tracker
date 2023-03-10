@@ -12,6 +12,7 @@ import { Link, useParams } from 'react-router-dom';
 function TableView() {
   const { projectId } = useParams();
   const [tasksData, setTasksData] = useState([]);
+  const [projectData, setProjectData] = useState({});
   const { loading, data } = useQuery(QUERY_SINGLE_PROJECTS, {
     // pass URL parameter
     variables: { projectId: projectId },
@@ -19,59 +20,63 @@ function TableView() {
 
   useEffect(() => {
     console.log(data)
+    setProjectData(data?.project || {})
     setTasksData(data?.project.tasks || []);
   }, [data])
 
   return (
-    <Table responsive striped>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th></th>
-          <th>Task Name</th>
-          <th>Assignee</th>
-          <th>Status</th>
-          <th>Due Date</th>
-          <th>Impact</th>
-          <th>Budget</th>
-        </tr>
-      </thead>
+    <>
+      <h4 className='newpro_cont'> {projectData.name} </h4>
+      <Table responsive striped>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th></th>
+            <th>Task Name</th>
+            <th>Assignee</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Impact</th>
+            <th>Budget</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {
-          tasksData.map((task, index) => {
-            return (
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <Link to="/editTask" className='edit-btn'><AiFillEdit /></Link>
-                </td>
-                <td>{task.name}</td>
-                <td>{task.assignees.map(assignee => {
-                  return assignee.username + " "
-                })}</td>
-                <td>{task.status}</td>
-                <td>{new Date(task.dueDate).toLocaleDateString("en-US")}</td>
-                <td>{task.impact}</td>
-                <td>{task.budget}</td>
-              </tr>
-            );
-          })
-        }
+        <tbody>
+          {
+            tasksData.map((task, index) => {
+              return (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>
+                    <Link to="/editTask" className='edit-btn'><AiFillEdit /></Link>
+                  </td>
+                  <td>{task.name}</td>
+                  <td>{task.assignees.map(assignee => {
+                    return assignee.username + " "
+                  })}</td>
+                  <td>{task.status}</td>
+                  <td>{new Date(task.dueDate).toLocaleDateString("en-US")}</td>
+                  <td>{task.impact}</td>
+                  <td>{task.budget}</td>
+                </tr>
+              );
+            })
+          }
 
-        <tr>
-          <td></td>
-          <td colSpan={7}>
-            <Link to={`/project/${projectId}/CreateTask`} className="Newtask">
-              <AiOutlinePlus /> New task
-            </Link>
-          </td>
+          <tr>
+            <td></td>
+            <td colSpan={7}>
+              <Link to={`/project/${projectId}/CreateTask`} className="Newtask">
+                <AiOutlinePlus /> New task
+              </Link>
+            </td>
 
-        </tr>
+          </tr>
 
 
-      </tbody>
-    </Table>
+        </tbody>
+      </Table>
+    </>
   );
 }
 
